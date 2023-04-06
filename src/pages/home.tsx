@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { AddChallengeCard } from "../components/AddChallengeCard";
-import { DeleteChallengeCard } from "../components/DeleteChallenge";
 import Root from "../layout/root";
 import { getChallengeList } from "../utils/Challenge";
-import { AddChallengeCardType } from "../types/addChallengeCard";
-import { Question, questionType } from "../utils/Question";
 import { ListAllDays } from "../components/ListAllDays";
 
 export default function Home() {
