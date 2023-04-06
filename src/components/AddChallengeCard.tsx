@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
-import { addChallenge } from "../utils/Challenge";
+import { addChallenge, getChallengeList } from "../utils/Challenge";
 import { ButtonAction } from "./button";
 import { FieldForm } from "./FieldForm";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-export function AddChallengeCard() {
+export function AddChallengeCard({ setItems }: { setItems: Function }) {
   const schema = z.object({
     timeSlept: z.number().positive().max(24),
     quantityWater: z.number().positive(),
@@ -20,9 +20,14 @@ export function AddChallengeCard() {
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
 
+  const onSubmit = (data: any) => {
+    addChallenge(data);
+    setItems(getChallengeList());
+  };
+
   return (
     <form
-      onSubmit={handleSubmit(addChallenge as any)}
+      onSubmit={handleSubmit(onSubmit as any)}
       className="space-y-2 my-4 text-lg font-medium"
     >
       <FieldForm
@@ -61,7 +66,7 @@ export function AddChallengeCard() {
         {...register("feelingTonight", { valueAsNumber: true })}
       />
 
-      <div className="pt-4">
+      <div className="pt-4" >
         <ButtonAction action="Enregistrer" />
       </div>
     </form>

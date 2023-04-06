@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <Root>
         <div className="flex flex-col justify-center items-center rounded-xl border border-gray-200 bg-gray-300 p-4 mx-auto overflow-hidden">
-          <AddChallengeCard  />
+          <AddChallengeCard setItems={setItems} />
           <ul className="mt-4 space-y-2">
             {items.map((elem: AddChallengeCardType, index) => (
               <li key={index}>
@@ -20,21 +20,23 @@ export default function Home() {
                   <h1>Day {index}</h1>
                   <div>
                     <p>
-                      😴 Combien de temps tu as dormis ? {elem.timeSlept}{" "}
+                      😴 Combien de temps tu as dormis ? {elem.timeSlept}
                       Heures
                     </p>
                     <p>
-                      🍺 Quelle quantité d'eau tu as bu ? {elem.quantityWater}{" "}
+                      🍺 Quelle quantité d'eau tu as bu ? {elem.quantityWater}
                       Centilitre
                     </p>
                     <p>
                       🍪 Tu as grignotté combien de fois ? {elem.timeEat} Fois
                     </p>
                     <p>
-                      🍃 J'ai médité combien de minutes ? {elem.timeMeditated}{" "}
+                      🍃 J'ai médité combien de minutes ? {elem.timeMeditated}
                       Minutes
                     </p>
-                    <p>🙄 Je me sens comment ce soir ? {elem.feelingTonight}/10</p>
+                    <p>
+                      🙄 Je me sens comment ce soir ? {elem.feelingTonight}/10
+                    </p>
                   </div>
                   <div className="flex flex-wrap justify-center items-center space-x-2">
                     <DeleteChallengeCard index={index} setItems={setItems} />
