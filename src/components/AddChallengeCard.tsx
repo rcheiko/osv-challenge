@@ -4,14 +4,15 @@ import { ButtonAction } from "./button";
 import { FieldForm } from "./FieldForm";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Question, questionType } from "../utils/Question";
 
 export function AddChallengeCard({ setItems }: { setItems: Function }) {
   const schema = z.object({
-    timeSlept: z.number().positive().max(24),
-    quantityWater: z.number().positive(),
-    timeEat: z.number().positive(),
-    timeMeditated: z.number().positive(),
-    feelingTonight: z.number().positive().max(10),
+    timeSlept: z.number().min(0).max(24),
+    quantityWater: z.number().min(0),
+    timeEat: z.number().min(0),
+    timeMeditated: z.number().min(0),
+    feelingTonight: z.number().min(0).max(10),
   });
 
   const {
@@ -19,7 +20,8 @@ export function AddChallengeCard({ setItems }: { setItems: Function }) {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
-
+  console.log(errors);
+  
   const onSubmit = (data: any) => {
     addChallenge(data);
     setItems(getChallengeList());
@@ -30,45 +32,26 @@ export function AddChallengeCard({ setItems }: { setItems: Function }) {
       onSubmit={handleSubmit(onSubmit as any)}
       className="space-y-2 my-4 text-lg font-medium"
     >
-      <FieldForm
-        label="😴 Combien de temps tu as dormis ?"
-        afterInput="Heures"
-        id="timeSlept"
-        error={errors.timeSlept?.message as string}
-        {...register("timeSlept", { valueAsNumber: true })}
-      />
-      <FieldForm
-        label="🍺 Quelle quantité d'eau tu as bu ?"
-        afterInput="Centilitre"
-        id="quantityWater"
-        error={errors.quantityWater?.message as string}
-        {...register("quantityWater", { valueAsNumber: true })}
-      />
-      <FieldForm
-        label="🍪 Tu as  grignotté combien de fois ?"
-        afterInput="Fois"
-        id="timeEat"
-        error={errors.timeEat?.message as string}
-        {...register("timeEat", { valueAsNumber: true })}
-      />
-      <FieldForm
-        label="🍃 J'ai médité combien de minutes ?"
-        afterInput="Minutes"
-        id="timeMeditated"
-        error={errors.timeMeditated?.message as string}
-        {...register("timeMeditated", { valueAsNumber: true })}
-      />
-      <FieldForm
-        label="🙄 Je me sens comment ce soir ?"
-        afterInput="/10"
-        id="feelingTonight"
-        error={errors.feelingTonight?.message as string}
-        {...register("feelingTonight", { valueAsNumber: true })}
-      />
-
-      <div className="pt-4" >
-        <ButtonAction action="Enregistrer" />
-      </div>
+      {
+        Question.map((elem: questionType, index: number) => (
+          <FieldForm key={index}
+            label={elem.label}
+            afterInput={elem.afterInput}
+            id={elem.id}
+            error={errors[elem.id]?.message as string}
+            {...register(elem.id, { valueAsNumber: true })}
+          />
+        ))
+      }
+      {
+        Object.keys(errors).length > 0
+        ? <div className="pt-4" >
+            <ButtonAction action="Enregistrer" disabled="true" />
+          </div> 
+        : <div className="pt-4" >
+            <ButtonAction action="Enregistrer" />
+          </div>
+      }
     </form>
   );
 }

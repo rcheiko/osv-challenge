@@ -1,5 +1,5 @@
 type ButtonActionProps = {
-  action: "Ajouter" | "Edit" | "Supprimer" | "Enregistrer" | "Annuler";
+  action: "Supprimer" | "Enregistrer";
   disabled?: "true" | "false";
 };
 
@@ -10,7 +10,7 @@ export function ButtonAction({
   if (disabled === "true")
     return (
       <div className="flex justify-center items-center space-x-4">
-        <button className="bg-gray-500 text-white font-bold py-1 px-4 rounded-lg cursor-not-allowed">
+        <button className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-1 px-4 rounded-lg cursor-not-allowed">
           {action}
         </button>
       </div>
@@ -27,15 +27,7 @@ export function ButtonAction({
         </button>
       </div>
     );
-  else if (action === "Annuler")
-    return (
-      <div className="flex justify-center items-center space-x-4">
-        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded-lg">
-          {action}
-        </button>
-      </div>
-    );
-
+    
   return (
     <div className="flex justify-center items-center space-x-4">
       <button
