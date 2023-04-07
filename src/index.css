@@ -13,3 +13,10 @@
     top: 0;
     left: 0;
 }
+
+.banner {
+    background-image: url(../src/assets/banner.png);
+    background-repeat: repeat-x;
+    background-size: contain;
+    height: 14px;
+  }

@@ -20,7 +20,6 @@ export function AddChallengeCard({ setItems }: { setItems: Function }) {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
-  console.log(errors);
   
   const onSubmit = (data: any) => {
     addChallenge(data);
